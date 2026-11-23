@@ -1,3 +1,14 @@
 data/
 _build/
 context/
+
+# python / jupyter
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+venv/
+.env
+
+# os
+.DS_Store

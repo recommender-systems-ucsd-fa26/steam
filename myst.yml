@@ -9,10 +9,14 @@ project:
     - name: Edwin Vargas Navarro
   exclude:
     - README.md
+  # Copied as-is to the site root; the user timeline widget fetches it.
+  static_files:
+    - demos/user_timelines.json
   # Only the pages listed here are built. Add notebooks as they are ready, e.g.
   #   - file: steam_price_eda_karina.ipynb
   toc:
     - file: intro.md
+    - file: steam_eda.ipynb
 site:
   template: book-theme
   options:
