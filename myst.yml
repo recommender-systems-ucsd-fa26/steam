@@ -1,0 +1,20 @@
+version: 1
+project:
+  title: Steam Recommender Project
+  description: "DSC 256 Assignment 2: exploratory analysis and recommender systems on Steam video game data"
+  authors:
+    - name: Evan Lim
+    - name: Karina Zambani
+    - name: Jerome Zhu
+    - name: Edwin Vargas Navarro
+  exclude:
+    - README.md
+  # Only the pages listed here are built. Add notebooks as they are ready, e.g.
+  #   - file: steam_price_eda_karina.ipynb
+  toc:
+    - file: intro.md
+site:
+  template: book-theme
+  options:
+    logo_text: Steam Recommender Project
+    hide_myst_branding: true
