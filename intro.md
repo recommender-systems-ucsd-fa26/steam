@@ -4,11 +4,25 @@ Steam is a digital game store and platform which hosts and distributes a variety
 
 Each user likely has a pricing preference. Some users are completely free to play, while others willingly spend hundreds or even thousands of dollars on major expensive titles. We are interested in examining this user pricing preference and potentially anticipate their purchasing behavior. Given a user’s Steam review history, can we predict the price of the next Steam game that user will review? Understanding their pricing preferences will 1\. help determine accurate revenue forecasts for Steam and 2\. determine a user’s comfortable price range to improve game recommendations for that user.   
 
-To evaluate this model, we split our model into a train, validation, and test set based on date percentiles. The most recent 10% of reviews is our test set, the second most recent 10% of reviews is our validation set, and the remaining 80% is our train set. We will also have to handle cold start cases where a user exists in the test dataset but not in the train nor validation sets.  Because our task is a regression problem, we will use the following metrics:
+To evaluate this model, we split our model into a train, validation, and test set based on date percentiles. The most recent 10% of reviews is our test set, the second most recent 10% of reviews is our validation set, and the remaining 80% is our train set. We will also have to handle cold start cases where a user exists in the test dataset but not in the train nor validation sets.  Because our task is a regression problem, we will use the following metrics, where $y_i$ is the true price of the $i$-th of $n$ test reviews and $\hat{y}_i$ is our prediction:
 
-1. Mean Absolute Error (MAE): Used an easily interpretable metric.  
-2. Mean Squared Error (MSE): Used to blow up large errors.   
-3. Mean Squared Log Error (MSLE): To balance errors in the low price range vs high price range. For example, predicting the next game is free when it’s \$30 is significantly worse than predicting \$70 when it’s \$100.
+1. Mean Absolute Error (MAE): Used an easily interpretable metric.
+
+   $$
+   \mathrm{MAE} = \frac{1}{n} \sum_{i=1}^{n} \left| y_i - \hat{y}_i \right|
+   $$
+
+2. Mean Squared Error (MSE): Used to blow up large errors.
+
+   $$
+   \mathrm{MSE} = \frac{1}{n} \sum_{i=1}^{n} \left( y_i - \hat{y}_i \right)^2
+   $$
+
+3. Mean Squared Log Error (MSLE): To balance errors in the low price range vs high price range. For example, predicting the next game is free when it’s \$30 is significantly worse than predicting \$70 when it’s \$100: the first adds $(\log 31 - \log 1)^2 \approx 11.8$, the second only $(\log 101 - \log 71)^2 \approx 0.12$.
+
+   $$
+   \mathrm{MSLE} = \frac{1}{n} \sum_{i=1}^{n} \left( \log(1 + y_i) - \log(1 + \hat{y}_i) \right)^2
+   $$
 
 We will also examine the following baselines:
 
