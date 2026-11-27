@@ -6,6 +6,20 @@
 :align: center
 ```
 
+## The problem
+
+Each user likely has a pricing preference. Some users are completely free to play, while others willingly spend hundreds or even thousands of dollars on major expensive titles. We are interested in examining this user pricing preference and potentially anticipate their purchasing behavior. **Given a user’s Steam review history, can we predict the price of the next Steam game that user will review?** Understanding their pricing preferences will 1\. help determine accurate revenue forecasts for Steam and 2\. determine a user’s comfortable price range to improve game recommendations for that user.   
+
+```{anywidget} demos/user_timeline.js
+{"url": "user_timelines.json", "start": "76561198329978687"}
+```
+
+:::{note}
+Each dot is one review by a single user, in date order (hover for the game). A model sees the blue dots and has to predict the price of the red one, without knowing which game it is.
+:::
+
+## Steam and game prices
+
 Steam is a digital game store and platform which hosts and distributes a variety of games. Steam is often claimed as the main gaming platform, having hundreds of thousands of active monthly users at any one time. Tens of thousands of games are readily accessible on Steam from behemoth titles like *Elden Ring* to smaller indie games like *Stray* and *Celeste*. Likewise, the pricing of these games can wildly vary; *Elden Ring* costs \$59.99 without discount while there are also thousands of free to play games like *Counter Strike 2*.   
 
 ::::{grid} 1 2 4 4
@@ -32,9 +46,13 @@ Steam is a digital game store and platform which hosts and distributes a variety
 
 ::::
 
-Each user likely has a pricing preference. Some users are completely free to play, while others willingly spend hundreds or even thousands of dollars on major expensive titles. We are interested in examining this user pricing preference and potentially anticipate their purchasing behavior. Given a user’s Steam review history, can we predict the price of the next Steam game that user will review? Understanding their pricing preferences will 1\. help determine accurate revenue forecasts for Steam and 2\. determine a user’s comfortable price range to improve game recommendations for that user.   
+## Evaluation
 
-To evaluate this model, we split our model into a train, validation, and test set based on date percentiles. The most recent 10% of reviews is our test set, the second most recent 10% of reviews is our validation set, and the remaining 80% is our train set. We will also have to handle cold start cases where a user exists in the test dataset but not in the train nor validation sets.  Because our task is a regression problem, we will use the following metrics, where $y_i$ is the true price of the $i$-th of $n$ test reviews and $\hat{y}_i$ is our prediction:
+To evaluate this model, we split our model into a train, validation, and test set based on date percentiles. The most recent 10% of reviews is our test set, the second most recent 10% of reviews is our validation set, and the remaining 80% is our train set. We will also have to handle cold start cases where a user exists in the test dataset but not in the train nor validation sets.
+
+### Metrics
+
+Because our task is a regression problem, we will use the following metrics, where $y_i$ is the true price of the $i$-th of $n$ test reviews and $\hat{y}_i$ is our prediction:
 
 1. Mean Absolute Error (MAE): Used an easily interpretable metric.
 
@@ -54,6 +72,8 @@ To evaluate this model, we split our model into a train, validation, and test se
    \mathrm{MSLE} = \frac{1}{n} \sum_{i=1}^{n} \left( \log(1 + y_i) - \log(1 + \hat{y}_i) \right)^2
    $$
 
+### Baselines
+
 We will also examine the following baselines:
 
 1. Using the second most recent game price.  
@@ -63,6 +83,9 @@ We will also examine the following baselines:
 5. Markov Chains without additional features.
 
 We will evaluate our final model by comparing its evaluation metrics to the above listed baselines.  
+
+## Limitations
+
 There are various limitations that will be open for future studies. We won’t account for frequent steam sales which can often run as high as 80-95% off. Free to play games often have in-game microtransactions whose pricing data aren’t present in the dataset. We’re assuming that a user will review every game they have purchased; however, it’s likely that a user purchases or even plays a game but doesn’t review it. Lastly, more than one person might be using the same steam account, blending pricing preferences. All of these factors will inevitably add bias to our results. 
 
 ## Data
