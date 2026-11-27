@@ -14,10 +14,6 @@ Each user likely has a pricing preference. Some users are completely free to pla
 {"url": "user_timelines.json", "start": "76561198329978687"}
 ```
 
-:::{note}
-Each dot is one review by a single user, in date order (hover for the game). A model sees the blue dots and has to predict the price of the red one, without knowing which game it is.
-:::
-
 ## Steam and game prices
 
 Steam is a digital game store and platform which hosts and distributes a variety of games. Steam is often claimed as the main gaming platform, having hundreds of thousands of active monthly users at any one time. Tens of thousands of games are readily accessible on Steam from behemoth titles like *Elden Ring* to smaller indie games like *Stray* and *Celeste*. Likewise, the pricing of these games can wildly vary; *Elden Ring* costs \$59.99 without discount while there are also thousands of free to play games like *Counter Strike 2*.   
