@@ -1,4 +1,4 @@
-# Steam Recommender Project
+# Steam Recommender Systems Project
 
 ```{image} assets/steam.svg
 :alt: Steam logo

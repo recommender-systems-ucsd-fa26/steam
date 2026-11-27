@@ -1,6 +1,7 @@
 version: 1
 project:
-  title: Steam Recommender Project
+  title: Steam Recommender Systems Project
+  short_title: Predictive Task
   description: "DSC 256 Assignment 2: exploratory analysis and recommender systems on Steam video game data"
   authors:
     - name: Evan Lim
@@ -32,5 +33,5 @@ site:
   options:
     favicon: assets/favicon.png
     logo: assets/logo.png
-    logo_text: Steam Recommender Project
+    logo_text: Steam Recommender Systems Project
     hide_myst_branding: true
