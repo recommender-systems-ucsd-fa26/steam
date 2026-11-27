@@ -1,6 +1,36 @@
 # Steam Recommender Project
 
+```{image} assets/steam.svg
+:alt: Steam logo
+:width: 120px
+:align: center
+```
+
 Steam is a digital game store and platform which hosts and distributes a variety of games. Steam is often claimed as the main gaming platform, having hundreds of thousands of active monthly users at any one time. Tens of thousands of games are readily accessible on Steam from behemoth titles like *Elden Ring* to smaller indie games like *Stray* and *Celeste*. Likewise, the pricing of these games can wildly vary; *Elden Ring* costs \$59.99 without discount while there are also thousands of free to play games like *Counter Strike 2*.   
+
+::::{grid} 1 2 4 4
+
+:::{figure} assets/games/elden_ring.jpg
+:alt: Elden Ring store header
+*Elden Ring*, \$59.99
+:::
+
+:::{figure} assets/games/stray.jpg
+:alt: Stray store header
+*Stray*, \$29.99
+:::
+
+:::{figure} assets/games/celeste.jpg
+:alt: Celeste store header
+*Celeste*, \$19.99
+:::
+
+:::{figure} assets/games/counter_strike_2.jpg
+:alt: Counter-Strike 2 store header
+*Counter-Strike 2*, free
+:::
+
+::::
 
 Each user likely has a pricing preference. Some users are completely free to play, while others willingly spend hundreds or even thousands of dollars on major expensive titles. We are interested in examining this user pricing preference and potentially anticipate their purchasing behavior. Given a user’s Steam review history, can we predict the price of the next Steam game that user will review? Understanding their pricing preferences will 1\. help determine accurate revenue forecasts for Steam and 2\. determine a user’s comfortable price range to improve game recommendations for that user.   
 

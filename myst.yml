@@ -9,16 +9,28 @@ project:
     - name: Edwin Vargas Navarro
   exclude:
     - README.md
-  # Copied as-is to the site root; the user timeline widget fetches it.
   static_files:
     - demos/user_timelines.json
-  # Only the pages listed here are built. Add notebooks as they are ready, e.g.
-  #   - file: steam_price_eda_karina.ipynb
   toc:
     - file: intro.md
-    - file: steam_eda.ipynb
+    - file: eda.ipynb
+    - file: modeling.ipynb
+    - file: evaluation.ipynb
+    - file: related_work.ipynb
+    - title: Notebooks
+      children:
+        - title: EDA
+          children:
+            - file: steam_price_eda_karina.ipynb
+              title: "Karina: price and label EDA"
+            - file: steam_eda_jerome.ipynb
+              title: "Jerome: dataset survey"
+            - file: steam_eda.ipynb
+              title: "Edwin: interactive EDA"
 site:
   template: book-theme
   options:
+    favicon: assets/favicon.png
+    logo: assets/logo.png
     logo_text: Steam Recommender Project
     hide_myst_branding: true
