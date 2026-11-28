@@ -8,28 +8,28 @@
 
 ## Steam and game prices
 
-Steam is a digital game store and platform which hosts and distributes a variety of games. Steam is often claimed as the main gaming platform, having hundreds of thousands of active monthly users at any one time. Tens of thousands of games are readily accessible on Steam from behemoth titles like *Elden Ring* to smaller indie games like *Stray* and *Celeste*. Likewise, the pricing of these games can wildly vary; *Elden Ring* costs \$59.99 without discount while there are also thousands of free to play games like *Counter Strike 2*.   
+Steam is a digital game store and platform which hosts and distributes a variety of games. Steam is often claimed as the main gaming platform, having hundreds of thousands of active monthly users at any one time. Tens of thousands of games are readily accessible on Steam from behemoth titles like *Grand Theft Auto V* to smaller indie games like *Undertale* and *Stardew Valley*. Likewise, the pricing of these games can wildly vary; *Grand Theft Auto V* costs \$39.99 without discount while there are also thousands of free to play games like *Team Fortress 2*.   
 
 ::::{grid} 1 2 4 4
 
-:::{figure} assets/games/elden_ring.jpg
-:alt: Elden Ring store header
-*Elden Ring*, \$59.99
+:::{figure} assets/games/grand_theft_auto_v.jpg
+:alt: Grand Theft Auto V store header
+*Grand Theft Auto V*, \$39.99
 :::
 
-:::{figure} assets/games/stray.jpg
-:alt: Stray store header
-*Stray*, \$29.99
+:::{figure} assets/games/undertale.jpg
+:alt: Undertale store header
+*Undertale*, \$9.99
 :::
 
-:::{figure} assets/games/celeste.jpg
-:alt: Celeste store header
-*Celeste*, \$19.99
+:::{figure} assets/games/stardew_valley.jpg
+:alt: Stardew Valley store header
+*Stardew Valley*, \$14.99
 :::
 
-:::{figure} assets/games/counter_strike_2.jpg
-:alt: Counter-Strike 2 store header
-*Counter-Strike 2*, free
+:::{figure} assets/games/team_fortress_2.jpg
+:alt: Team Fortress 2 store header
+*Team Fortress 2*, free
 :::
 
 ::::
@@ -44,7 +44,7 @@ Each user likely has a pricing preference. Some users are completely free to pla
 
 ## Evaluation
 
-To evaluate this model, we split our model into a train, validation, and test set based on date percentiles. The most recent 10% of reviews is our test set, the second most recent 10% of reviews is our validation set, and the remaining 80% is our train set. We will also have to handle cold start cases where a user exists in the test dataset but not in the train nor validation sets.
+To evaluate this model, we split our model into a train, validation, and test set based on date percentiles. The most recent 10% of reviews is our test set, the second most recent 10% of reviews is our validation set, and the remaining 80% is our train set. In dates, train covers reviews before 2017-07-07, validation covers 2017-07-07 up to 2017-11-06, and test is everything from 2017-11-06 on. We will also have to handle cold start cases where a user exists in the test dataset but not in the train nor validation sets. Their features can still use their earlier reviews inside the test window, which is what Steam would know on that day.
 
 ```{anywidget} demos/split_timeline.js
 {"url": "split_timeline.json", "view": "split"}
@@ -82,11 +82,14 @@ Because our task is a regression problem, we will use the following metrics, whe
 
 We will also examine the following baselines:
 
-1. Using the second most recent game price.  
-2. Taking the median price of the user’s review history.  
-3. Using a weighted average of the user’s review history with more weight on recent purchases.  
-4. A linear regression model using only user features and purchase history features without recommender system elements.  
-5. Markov Chains without additional features.
+1. Constant guesses: the training median, mean or geometric mean, the same for every review.  
+2. Using the second most recent game price.  
+3. Taking the median price of the user’s last 10 games.  
+4. Using a weighted average of the user’s review history with more weight on recent purchases.  
+5. A shrunk user mean: the user's mean price pulled toward the overall mean.  
+6. A linear regression model using only user features and purchase history features without recommender system elements.  
+7. Markov Chains on price buckets: the typical next price after a last game in the same price bucket.  
+8. Markov Chains on games: the typical next price after the same last game, across all users.
 
 We will evaluate our final model by comparing its evaluation metrics to the above listed baselines.  
 
