@@ -8,7 +8,7 @@
 
 ## Steam and game prices
 
-Steam is a digital game store and platform which hosts and distributes a variety of games. Steam is often claimed as the main gaming platform, having hundreds of thousands of active monthly users at any one time. Tens of thousands of games are readily accessible on Steam from behemoth titles like *Grand Theft Auto V* to smaller indie games like *Undertale* and *Stardew Valley*. Likewise, the pricing of these games can wildly vary; *Grand Theft Auto V* costs \$39.99 without discount while there are also thousands of free to play games like *Team Fortress 2*.   
+Steam is a digital game store and platform which hosts and distributes a variety of games. Steam is often claimed as the main gaming platform, having millions of active users at any one time. Tens of thousands of games are readily accessible on Steam from behemoth titles like *Grand Theft Auto V* to smaller indie games like *Undertale* and *Stardew Valley*. Likewise, the pricing of these games can wildly vary; *Grand Theft Auto V* costs \$39.99 without discount while there are also thousands of free to play games like *Team Fortress 2*.   
 
 ::::{grid} 1 2 4 4
 
@@ -45,6 +45,8 @@ Each user likely has a pricing preference. Some users are completely free to pla
 ## Evaluation
 
 To evaluate this model, we split our model into a train, validation, and test set based on date percentiles. The most recent 10% of reviews is our test set, the second most recent 10% of reviews is our validation set, and the remaining 80% is our train set. In dates, train covers reviews before 2017-07-07, validation covers 2017-07-07 up to 2017-11-06, and test is everything from 2017-11-06 on. We will also have to handle cold start cases where a user exists in the test dataset but not in the train nor validation sets. Their features can still use their earlier reviews inside the test window, which is what Steam would know on that day.
+
+To check that the predictions are valid, we recompute the features straight from the raw reviews to confirm they only use earlier days, put confidence intervals on every result by resampling users, and measure a ceiling by giving the model information it shouldn't have (the next game's genre).
 
 ```{anywidget} demos/split_timeline.js
 {"url": "split_timeline.json", "view": "split"}
@@ -99,11 +101,4 @@ There are various limitations that will be open for future studies. We won’t a
 
 ## Data
 
-We use the Steam Video Game and Bundle Data from Professor McAuley's lab at UCSD [@kang2018sasrec; @wan2018chains; @pathak2017bundles].
-
-| File | Contents |
-|---|---|
-| `steam_games.json` | 32,135 games with price, genres, tags and release date |
-| `steam_reviews.json` | 7,793,069 reviews with the game, date and hours played |
-| `australian_users_items.json` | 88,310 Australian users' game libraries with playtime per game |
-| `australian_user_reviews.json` | 59,305 reviews by Australian users, each marked recommend or not |
+We use the Steam Video Game and Bundle Data from Professor McAuley's lab at UCSD [@kang2018sasrec; @wan2018chains; @pathak2017bundles]. Details are in the [EDA](eda.ipynb).
