@@ -51,7 +51,7 @@ async function render({ model, el }) {
     const axis = `<text x="${W - 20}" y="${H - 8}" font-size="11" fill="#888" text-anchor="end">review order →</text>`;
     svg.innerHTML = ticks.join("") + dots.join("") + axis;
     const mean = u.p.slice(0, -1).reduce((a, b) => a + b) / (n - 1);
-    info.textContent = `${n} reviews · next: $${u.p[n - 1]} · history mean: $${mean.toFixed(2)}`;
+    info.textContent = `${n} reviews, next $${u.p[n - 1]}, history mean $${mean.toFixed(2)}`;
   };
 
   svg.addEventListener("pointerover", (e) => {
@@ -59,13 +59,13 @@ async function render({ model, el }) {
     if (i === undefined) return;
     const cx = Number(e.target.getAttribute("cx"));
     const cy = Number(e.target.getAttribute("cy"));
-    tip.textContent = `${current.d[i]} · ${current.t[i]} · $${current.p[i]}`;
+    tip.innerHTML = `<b>${current.t[i]}</b><br>${current.d[i]}, $${current.p[i]}`;
     tip.style.display = "block";
     const box = svg.getBoundingClientRect();
     const origin = el.getBoundingClientRect();
     const left = cx > W / 2 ? cx - 12 - tip.offsetWidth : cx + 12;
     tip.style.left = `${box.left - origin.left + left}px`;
-    tip.style.top = `${box.top - origin.top + cy - 36}px`;
+    tip.style.top = `${box.top - origin.top + cy - 52}px`;
   });
   svg.addEventListener("pointerout", (e) => {
     if (e.target.dataset?.i !== undefined) tip.style.display = "none";

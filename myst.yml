@@ -8,6 +8,8 @@ project:
     - name: Karina Zambani
     - name: Jerome Zhu
     - name: Edwin Vargas Navarro
+  bibliography:
+    - references.bib
   exclude:
     - README.md
   static_files:

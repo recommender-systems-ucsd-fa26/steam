@@ -96,6 +96,8 @@ There are various limitations that will be open for future studies. We won’t a
 
 ## Data
 
+We use the Steam Video Game and Bundle Data from Professor McAuley's lab at UCSD [@kang2018sasrec; @wan2018chains; @pathak2017bundles].
+
 | File | Contents |
 |---|---|
 | `steam_games.json` | 32,135 games with price, genres, tags and release date |

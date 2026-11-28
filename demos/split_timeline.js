@@ -28,7 +28,8 @@ function splitView(data, split, [t1, t2]) {
   const bars = data.weeks.map((n, i) => {
     const ms = start + i * 7 * DAY;
     const h = Math.min(n / top, 1) * (Y1 - Y0);
-    return `<rect x="${x(ms)}" y="${Y1 - h}" width="${bw + 0.3}" height="${h}" fill="${COLOR[split(ms)]}"/>`;
+    return `<rect data-w="${i}" x="${x(ms)}" y="${Y0}" width="${bw + 0.3}" height="${Y1 - Y0}" fill="transparent"/>
+      <rect data-w="${i}" x="${x(ms)}" y="${Y1 - h}" width="${bw + 0.3}" height="${h}" fill="${COLOR[split(ms)]}"/>`;
   });
   const years = [2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018].map((y) =>
     `<text x="${x(Date.UTC(y, 0, 1))}" y="${Y1 + 14}" font-size="10" fill="#888" text-anchor="middle">${y}</text>`);
@@ -87,8 +88,31 @@ async function render({ model, el }) {
   };
 
   if (model.get("view") !== "visible") {
-    el.append(svg);
+    const tip = document.createElement("div");
+    tip.style.cssText = "position:absolute;display:none;pointer-events:none;white-space:nowrap;"
+      + "background:#222;color:#fff;font-size:12px;padding:4px 8px;border-radius:4px";
+    el.style.position = "relative";
+    el.append(svg, tip);
     draw(splitView(data, split, cuts));
+    const start = Date.parse(data.start);
+    const total = data.weeks.reduce((a, b) => a + b, 0);
+    const before = data.weeks.map(((s) => (n) => (s += n))(0));
+    svg.addEventListener("pointermove", (e) => {
+      const i = e.target.dataset?.w;
+      if (i === undefined) {
+        tip.style.display = "none";
+        return;
+      }
+      const ms = start + Number(i) * 7 * DAY;
+      tip.innerHTML = `<b>week of ${date(ms, { day: "numeric", month: "short", year: "numeric" })}</b><br>`
+        + `${data.weeks[i].toLocaleString()} reviews (${NAME[split(ms)]})<br>${((100 * before[i]) / total).toFixed(1)}% of all reviews so far`;
+      tip.style.display = "block";
+      const box = el.getBoundingClientRect();
+      const left = e.clientX - box.left;
+      tip.style.left = `${left > box.width / 2 ? left - 12 - tip.offsetWidth : left + 12}px`;
+      tip.style.top = `${e.clientY - box.top - 64}px`;
+    });
+    svg.addEventListener("pointerleave", () => { tip.style.display = "none"; });
     return;
   }
 
