@@ -1,5 +1,6 @@
 """Shared helpers for the Steam notebooks: price cleaning, loading, and widgets."""
 import ast
+import re
 from pathlib import Path
 
 import anywidget
@@ -11,11 +12,15 @@ LABELS = ["free", "$0-5", "$5-10", "$10-20", "$20-30", "$30-60", "$60+"]
 
 
 def clean_price(v):
-    """List price in dollars: free variants -> 0.0, non-price strings -> None."""
+    """List price in dollars: free variants -> 0.0, "Starting at $499.00" -> 499.0, non-price strings -> None."""
     if isinstance(v, (int, float)):
         return float(v)
-    if isinstance(v, str) and "free" in v.lower():
-        return 0.0
+    if isinstance(v, str):
+        if "free" in v.lower():
+            return 0.0
+        m = re.search(r"\$\s*([\d,]+(?:\.\d+)?)", v)
+        if m:
+            return float(m.group(1).replace(",", ""))
     return None
 
 

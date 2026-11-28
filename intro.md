@@ -6,14 +6,6 @@
 :align: center
 ```
 
-## The problem
-
-Each user likely has a pricing preference. Some users are completely free to play, while others willingly spend hundreds or even thousands of dollars on major expensive titles. We are interested in examining this user pricing preference and potentially anticipate their purchasing behavior. **Given a user’s Steam review history, can we predict the price of the next Steam game that user will review?** Understanding their pricing preferences will 1\. help determine accurate revenue forecasts for Steam and 2\. determine a user’s comfortable price range to improve game recommendations for that user.   
-
-```{anywidget} demos/user_timeline.js
-{"url": "user_timelines.json", "start": "76561198329978687"}
-```
-
 ## Steam and game prices
 
 Steam is a digital game store and platform which hosts and distributes a variety of games. Steam is often claimed as the main gaming platform, having hundreds of thousands of active monthly users at any one time. Tens of thousands of games are readily accessible on Steam from behemoth titles like *Elden Ring* to smaller indie games like *Stray* and *Celeste*. Likewise, the pricing of these games can wildly vary; *Elden Ring* costs \$59.99 without discount while there are also thousands of free to play games like *Counter Strike 2*.   
@@ -42,9 +34,27 @@ Steam is a digital game store and platform which hosts and distributes a variety
 
 ::::
 
+## Can we predict the price of the next game a user reviews?
+
+Each user likely has a pricing preference. Some users are completely free to play, while others willingly spend hundreds or even thousands of dollars on major expensive titles. We are interested in examining this user pricing preference and potentially anticipate their purchasing behavior. **Given a user’s Steam review history, can we predict the price of the next Steam game that user will review?** Understanding their pricing preferences will 1\. help determine accurate revenue forecasts for Steam and 2\. determine a user’s comfortable price range to improve game recommendations for that user.   
+
+```{anywidget} demos/user_timeline.js
+{"url": "user_timelines.json", "start": "76561198329978687"}
+```
+
 ## Evaluation
 
 To evaluate this model, we split our model into a train, validation, and test set based on date percentiles. The most recent 10% of reviews is our test set, the second most recent 10% of reviews is our validation set, and the remaining 80% is our train set. We will also have to handle cold start cases where a user exists in the test dataset but not in the train nor validation sets.
+
+```{anywidget} demos/split_timeline.js
+{"url": "split_timeline.json", "view": "split"}
+```
+
+By splitting by date percentiles, we help reduce data leakage. For example, if Steam is interested in the price of the game you will next review - they wouldn' thave any data on the future (trends, sentiment, games that haven't been announced anywhere, etc). If you were to randomize the entire data 80% (test) / 10% (val) / 10% (test), then the model will have knowledge on trends, sentiment, etc of the test set. Our modeling for this reason is only looking at data up to a certain date to predict the price of the next game that would be reviewed. 
+
+```{anywidget} demos/split_timeline.js
+{"url": "split_timeline.json", "view": "visible"}
+```
 
 ### Metrics
 

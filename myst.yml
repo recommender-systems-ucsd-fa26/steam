@@ -12,6 +12,7 @@ project:
     - README.md
   static_files:
     - demos/user_timelines.json
+    - demos/split_timeline.json
   toc:
     - file: intro.md
     - file: eda.ipynb
